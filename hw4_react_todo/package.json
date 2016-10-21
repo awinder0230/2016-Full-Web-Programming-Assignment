@@ -1,0 +1,34 @@
+{
+  "name": "react_todo",
+  "version": "1.0.0",
+  "description": "todo list",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve .",
+    "clean": "rimraf dist",
+    "build": "npm run clean && babel src -d dist --copy-files",
+    "build:watch": "npm run build -- --watch"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "rimraf": "^2.5.4",
+    "serve": "^1.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awinder0230/2016-Full-Web-Programming-Assignment.git"
+  },
+  "keywords": [
+    "todo",
+    "list"
+  ],
+  "author": "awinder0230",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/awinder0230/2016-Full-Web-Programming-Assignment/issues"
+  },
+  "homepage": "https://github.com/awinder0230/2016-Full-Web-Programming-Assignment#readme"
+}
