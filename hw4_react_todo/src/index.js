@@ -18,7 +18,10 @@ class TodoApp extends Component {
   }
  
   updateComplete(c){
+    //console.log(c);
     if(c.checked){
+      console.log(c);
+      alert('CHECKED');
       this.setState({completeCount: this.state.completeCount + 1});
       this.setState({todoCount: this.state.todoCount - 1});
     }
@@ -40,12 +43,12 @@ class TodoApp extends Component {
     // 直接修改 this.state 是無法自動觸發變更的
     if(e.key === 'Enter' && this.state.txt.trim()!==''){
       this.setState({todoCount: this.state.todoCount + 1});
+      //this.setState({completeCount: this.state.completeCount + 1});//test only
       const ul = document.getElementById('todolist');
 
       const li = document.createElement("li");
-      li.className = "main";
-      li.className += "todo-list";
-      li.setAttribute("id", "notComplete");
+      //li.className = "completed";//test only
+      //li.setAttribute("id", "notComplete");
 
       const div = document.createElement("div");
       div.className = "view";
@@ -76,15 +79,16 @@ class TodoApp extends Component {
   }
 
   clearComplete(){
-
-/*
-var ul = document.getElementById("foo");
-var items = ul.getElementsByTagName("li");
-for (var i = 0; i < items.length; ++i) {
-  // do something with items[i], which is a <li> element
-}
-*/
-
+    const ul = document.getElementById('todolist');
+    const li = ul.getElementsByTagName("li");
+    for(let i = 0; i < this.state.completeCount; ++i){
+      if(li[i].className === 'completed'){
+        li[i].parentNode.removeChild(li[i]);
+        --i;
+        this.setState({completeCount: this.state.completeCount - 1});
+        this.setState({todoCount: this.state.todoCount - 1});
+      }
+    }
   }
 
   render() {
@@ -96,7 +100,9 @@ for (var i = 0; i < items.length; ++i) {
             update={this.inputWords}
             newTodo={this.newTodo}/>
 	        <TodoItem/>
-          <CountDisplay count={this.state.todoCount}/>
+          <CountDisplay 
+            count={this.state.todoCount}
+            clear={this.clearComplete}/>
         </section>
         <Info/>
       </div>
@@ -125,7 +131,7 @@ const TodoItem = () => <section className="main">
 
 const CountDisplay = (props) => <footer className="footer">
   <span className="todo-count">{props.count} item(s) left</span>
-  <button className="clear-completed">Clear completed</button>
+  <button className="clear-completed" onClick={props.clear}>Clear completed</button>
 </footer>
 
 const Info = () => <footer className="info">
