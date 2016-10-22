@@ -10,24 +10,42 @@ class TodoApp extends Component {
     this.clearComplete = this.clearComplete.bind(this);
     this.inputWords = this.inputWords.bind(this);
     this.updateTxt = this.updateTxt.bind(this);
+    this.updateComplete = this.updateComplete.bind(this);
   }
 
   updateTxt(t){
     this.setState({txt: t});
   }
  
+  updateComplete(c){
+    if(c.checked){
+      this.setState({completeCount: this.state.completeCount + 1});
+      this.setState({todoCount: this.state.todoCount - 1});
+    }
+    else{
+      alert('NOT CHECKED');
+    }
+    /*
+    else{
+      this.setState({completeCount: this.state.completeCount - 1});
+      this.setState({todoCount: this.state.todoCount + 1});
+    }*/
+    //c.className += "completed";
+
+  }
+
 
   newTodo(e){
   	// 只能用 setState 去改變 state
     // 直接修改 this.state 是無法自動觸發變更的
-    if(e.key === 'Enter'){
+    if(e.key === 'Enter' && this.state.txt.trim()!==''){
       this.setState({todoCount: this.state.todoCount + 1});
       const ul = document.getElementById('todolist');
 
       const li = document.createElement("li");
       li.className = "main";
       li.className += "todo-list";
-      //li.setAttribute("id", "notComplete");
+      li.setAttribute("id", "notComplete");
 
       const div = document.createElement("div");
       div.className = "view";
@@ -35,6 +53,7 @@ class TodoApp extends Component {
       const input = document.createElement("input");
       input.className = "toggle";
       input.type = "checkbox";
+      input.setAttribute("onChange", this.updateComplete(input));
 
       const label = document.createElement("label");
       label.appendChild(document.createTextNode(this.state.txt));
@@ -67,41 +86,42 @@ for (var i = 0; i < items.length; ++i) {
 */
 
   }
-//update={this.inputWords}/>
+
   render() {
     return (
       <div>
-        <Header
-          value={this.state.txt}
-          update={this.inputWords}
-          newTodo={this.newTodo}/>
-	      <TodoItem/>
-	      <CountDisplay count={this.state.todoCount}/>
-	      <Info/>
+        <section className="todoapp">
+          <Header
+            value={this.state.txt}
+            update={this.inputWords}
+            newTodo={this.newTodo}/>
+	        <TodoItem/>
+          <CountDisplay count={this.state.todoCount}/>
+        </section>
+        <Info/>
       </div>
     );
   }
 }
-//onChange={props.update}
-const Header = (props) => <section className="todoapp">
-  <header className="header">
-    <h1>todos</h1>
-    <input 
-      className="new-todo" 
-      placeholder="What needs to be done?"
-      value={props.value}
-      onChange={props.update}
-      onKeyPress={props.newTodo}>
-    </input>
-  </header>
-</section>
+
+const Header = (props) => <header className="header">
+  <h1>todos</h1>
+  <input 
+    className="new-todo" 
+    placeholder="What needs to be done?"
+    value={props.value}
+    onChange={props.update}
+    onKeyPress={props.newTodo}>
+  </input>
+</header>
 
 
 const TodoItem = () => <section className="main">
-  <input className="toggle-all" type="checkbox"></input>
+  <input className="toggle-all" type="checkbox" ></input>
   <label htmlFor="toggle-all">Mark all as complete</label>
   <ul className="todo-list" id="todolist"></ul>
 </section>
+
 
 const CountDisplay = (props) => <footer className="footer">
   <span className="todo-count">{props.count} item(s) left</span>
