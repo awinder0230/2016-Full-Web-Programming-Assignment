@@ -3,7 +3,14 @@ const { Component } = React;
 class TodoApp extends Component {
   constructor(props) {
     super(props);
-    this.state = { todoCount: 0, completeCount: 0, txt: ''};
+
+    this.state = { 
+      todoCount: 0,
+      completeCount: 0,
+      txt: '',
+      todos: [],
+      completeList: [],
+    };
 
     // 一定要Bind, Bind handler here!
     this.newTodo = this.newTodo.bind(this);
@@ -11,6 +18,8 @@ class TodoApp extends Component {
     this.inputWords = this.inputWords.bind(this);
     this.updateTxt = this.updateTxt.bind(this);
     this.updateComplete = this.updateComplete.bind(this);
+    this.destroy = this.destroy.bind(this);
+    this.selectAll = this.selectAll.bind(this);
   }
 
   updateTxt(t){
@@ -18,58 +27,51 @@ class TodoApp extends Component {
   }
  
   updateComplete(c){
-    //console.log(c);
-    if(c.checked){
-      console.log(c);
-      alert('CHECKED');
-      this.setState({completeCount: this.state.completeCount + 1});
-      this.setState({todoCount: this.state.todoCount - 1});
+    if(c.target.checked){
+      c.target.parentNode.parentNode.className = "completed";
+      const tmp = this.state.completeList;
+      tmp[c.target.id] = "1";
+      this.setState({
+        completeList: tmp,
+        todoCount: this.state.todoCount - 1,
+        completeCount: this.state.completeCount + 1});
     }
     else{
-      alert('NOT CHECKED');
+      c.target.parentNode.parentNode.className = "";
+      const tmp = this.state.completeList;
+      tmp[c.target.id] = "0";
+      this.setState({
+        completeList: tmp,
+        todoCount: this.state.todoCount + 1,
+        completeCount: this.state.completeCount - 1});
     }
-    /*
-    else{
-      this.setState({completeCount: this.state.completeCount - 1});
-      this.setState({todoCount: this.state.todoCount + 1});
-    }*/
-    //c.className += "completed";
-
   }
 
+
+  destroy(c){ // NOT YET COMPLEYR
+    const index = c.target.id;
+    if(this.state.completeList[index]==="1"){
+      this.setState({completeCount: this.state.completeCount - 1});
+    }
+    else{
+      this.setState({todoCount: this.state.todoCount - 1});
+    }
+    if (index > -1) {
+      const tmp1 = this.state.todos;
+      const tmp2 = this.state.completeList;
+      delete tmp1[index];
+      delete tmp2[index];
+      this.setState({todos: tmp1, completeList: tmp2});
+    }
+  }
 
   newTodo(e){
   	// 只能用 setState 去改變 state
     // 直接修改 this.state 是無法自動觸發變更的
     if(e.key === 'Enter' && this.state.txt.trim()!==''){
       this.setState({todoCount: this.state.todoCount + 1});
-      //this.setState({completeCount: this.state.completeCount + 1});//test only
-      const ul = document.getElementById('todolist');
-
-      const li = document.createElement("li");
-      //li.className = "completed";//test only
-      //li.setAttribute("id", "notComplete");
-
-      const div = document.createElement("div");
-      div.className = "view";
-
-      const input = document.createElement("input");
-      input.className = "toggle";
-      input.type = "checkbox";
-      input.setAttribute("onChange", this.updateComplete(input));
-
-      const label = document.createElement("label");
-      label.appendChild(document.createTextNode(this.state.txt));
-
-      const button = document.createElement("button");
-      button.className = "destroy";
-
-      div.appendChild(input);
-      div.appendChild(label);
-      div.appendChild(button);
-      li.appendChild(div);
-      ul.appendChild(li);
-
+      this.setState({todos: this.state.todos.concat([this.state.txt.trim()])});
+      this.setState({completeList: this.state.completeList.concat(["0"])});
       this.updateTxt('');
     }
   }
@@ -78,17 +80,22 @@ class TodoApp extends Component {
     this.updateTxt(w.target.value);
   }
 
+
   clearComplete(){
-    const ul = document.getElementById('todolist');
-    const li = ul.getElementsByTagName("li");
-    for(let i = 0; i < this.state.completeCount; ++i){
-      if(li[i].className === 'completed'){
-        li[i].parentNode.removeChild(li[i]);
-        --i;
-        this.setState({completeCount: this.state.completeCount - 1});
-        this.setState({todoCount: this.state.todoCount - 1});
+    const length = this.state.completeList.length;
+    for(let i=length-1; i>=0; --i){
+      if(this.state.completeList[i]==="1"){
+        const tmp1 = this.state.completeList;
+        const tmp2 = this.state.todos;
+        delete tmp1[i];
+        delete tmp2[i];
+        this.setState({completeList: tmp1, todos: tmp2});
       }
     }
+  }
+
+  selectAll(){
+
   }
 
   render() {
@@ -99,7 +106,16 @@ class TodoApp extends Component {
             value={this.state.txt}
             update={this.inputWords}
             newTodo={this.newTodo}/>
-	        <TodoItem/>
+          <section className="main">
+            <TodoItemHeader selectAll={this.selectAll}/>
+            <ul className="todo-list" id="todolist">
+              {this.state.todos.map((todo,index) => <TodoItem
+                txt={todo} 
+                i={index} 
+                onCheck={this.updateComplete} 
+                destroy={this.destroy}/>)}
+            </ul>
+          </section>
           <CountDisplay 
             count={this.state.todoCount}
             clear={this.clearComplete}/>
@@ -109,7 +125,7 @@ class TodoApp extends Component {
     );
   }
 }
-
+//{this.state.todos.map(todo => <TodoItem />)}
 const Header = (props) => <header className="header">
   <h1>todos</h1>
   <input 
@@ -121,12 +137,23 @@ const Header = (props) => <header className="header">
   </input>
 </header>
 
-
-const TodoItem = () => <section className="main">
-  <input className="toggle-all" type="checkbox" ></input>
+const TodoItemHeader = (props) => <div>
+  <input className="toggle-all" type="checkbox" onClick={props.selectAll}></input>
   <label htmlFor="toggle-all">Mark all as complete</label>
-  <ul className="todo-list" id="todolist"></ul>
-</section>
+</div>
+
+const TodoItem = (props) => <li>
+  <div className = "view">
+    <input 
+      className = "toggle"
+      onChange = {props.onCheck}
+      type = "checkbox"
+      id = {props.i}>
+    </input>
+    <label>{props.txt}</label>
+    <button className = "destroy" id = {props.i} onClick = {props.destroy}></button>
+  </div>
+</li>
 
 
 const CountDisplay = (props) => <footer className="footer">
