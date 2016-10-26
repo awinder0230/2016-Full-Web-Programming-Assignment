@@ -8,3 +8,6 @@
 - React
 - JSX
 - todo list
+
+## Week 5: Webpack
+- Loaders
