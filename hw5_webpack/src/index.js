@@ -9,6 +9,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import './todo.css';
+import TodoItem from './todoitem.js';
+import CountDisplay from './countdisplay.js';
 //const { Component } = React; // eslint-disable-line
 
 class TodoApp extends Component {
@@ -161,20 +163,6 @@ const TodoItemHeader = props => <div>
   <input className="toggle-all" type="checkbox" onChange={props.selectAll}></input>
   <label htmlFor="toggle-all">Mark all as complete</label>
 </div>;
-
-const TodoItem = props => <li className={props.name}>
-  <div className="view">
-    <input className="toggle" onChange={props.onCheck} type="checkbox" id={props.i}></input>
-    <label>{props.txt}</label>
-    <button className="destroy" id={props.i} onClick={props.destroy}></button>
-  </div>
-</li>;
-
-
-const CountDisplay = props => <footer className="footer">
-  <span className="todo-count">{props.count} item(s) left</span>
-  <button className="clear-completed" onClick={props.clear}>Clear completed</button>
-</footer>;
 
 const Info = () => <footer className="info">
   <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
