@@ -8,7 +8,7 @@ class UsersPage extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       users: [],
     };
@@ -24,9 +24,8 @@ class UsersPage extends Component {
   render() {
     return (
       <div>Users
-        {this.state.users.map((user, index) => <li 
-          key={index+1}><a href={`#/users/${index+1}`}>
-          User {index+1}: {user.name}
+        {this.state.users.map((user, index) => <li key={index + 1}><a href={`#/users/${index + 1}`}>
+          User { index + 1 }: { user.name }
         </a></li>)}
       </div>
     );

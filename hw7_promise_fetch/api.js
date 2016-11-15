@@ -9,13 +9,13 @@ const users = [
 
 // Write your restful api here:
 
-router.get( '/users', (req, res) => {
-  res.json( users );
-  console.log('users',users);
+router.get('/users', (req, res) => {
+  res.json(users);
+  console.log('users', users);
 });
 
 router.get('/users/:id', (req, res) => {
-  res.json( users[parseInt(req.params.id) - 1]);
+  res.json(users[parseInt(req.params.id, 10) - 1]);
 });
 
 export default router;

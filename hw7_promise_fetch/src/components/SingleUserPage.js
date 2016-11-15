@@ -5,25 +5,25 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 class SingleUserPage extends Component {
-  
+
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+  };
+
   constructor() {
     super();
     this.state = {
       avator: '',
       name: '',
       age: 0
-    }
+    };
   }
 
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-  };
-
   componentDidMount() {
-    // fetch `/api/users/${id}` to get user and then set state...
-  fetch(`/api/users/${this.props.id}`)
-    .then(res => {return res.json();})
-    .then(json => this.setState( { avator: json.avatar, name: json.name, age: json.age }));
+  // fetch `/api/users/${id}` to get user and then set state...
+    fetch(`/api/users/${this.props.id}`)
+    .then(res => res.json())
+    .then(json => this.setState({ avator: json.avatar, name: json.name, age: json.age }));
   }
 
   render() {
