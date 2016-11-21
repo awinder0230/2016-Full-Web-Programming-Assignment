@@ -18,3 +18,6 @@
 ## Week 7: Fetch
 - RESTful
 - Routing
+
+## Week 8: Test
+- Jest
