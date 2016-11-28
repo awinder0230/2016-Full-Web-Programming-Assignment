@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import HomePage from './HomePage';
-import UsersPage from './AnimalsPage';
-import SingleUserPage from './SingleAnimalPage';
+import AnimalsPage from './AnimalsPage';
+import SingleAnimalPage from './SingleAnimalPage';
 
 class App extends Component {
   state = {
