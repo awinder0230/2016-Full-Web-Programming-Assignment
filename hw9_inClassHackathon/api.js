@@ -18,7 +18,7 @@ router.get('/animals', (req, res) => {
 
 router.get('/animals/:id', (req, res) => {
   const tmp = parseInt(req.params.id, 10) - 1;
-  if(tmp > 0 && tmp <= animals.length) {
+  if(tmp >= 0 && tmp <= animals.length) {
   	res.json(animals[tmp]);
   }
   else {
