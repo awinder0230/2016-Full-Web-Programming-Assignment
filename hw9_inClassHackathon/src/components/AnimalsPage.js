@@ -3,25 +3,12 @@ import React, { Component } from 'react';
 class AnimalsPage extends Component {
   state = { };
 
-  moreInfo() {
-    
-  }
-
   render() {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-6 text-center">
+          <div className="col-md-12 text-center">
             <h1>Home for Street Animals <span className="glyphicon glyphicon-home" aria-hidden="true"></span></h1>
-          </div>
-          <div className="col-md-3">
-            <form className="navbar-form navbar-left" role="search">
-              <div className="form-group">
-                <input type="text" className="form-control" placeholder="Find..."></input>
-                <button type="submit" className="btn btn-default">Submit</button>
-              </div>
-            </form>
           </div>
         </div>
         <div className="row">
