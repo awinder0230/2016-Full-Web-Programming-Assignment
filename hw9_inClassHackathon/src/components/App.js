@@ -52,7 +52,7 @@ class App extends Component {
               </ul>
               <form action={this.state.searchHref} className="navbar-form navbar-left pull-right" role="search">
                 <div className="form-group">
-                  <input value={this.state.txt} onChange={this.update.bind(this)} type="text" className="form-control" placeholder="Find by ID"></input>
+                  <input value={this.state.txt} onChange={this.update.bind(this)} type="text" className="form-control" placeholder="Search by ID"></input>
                   <button onClick={this.resetInput.bind(this)} type="submit" className="btn btn-default">Submit</button>
                 </div>
               </form>

@@ -37,7 +37,7 @@ class SingleAnimalPage extends Component {
   }
 
   adopt() {
-    window.alert("I love YOU!!");
+    window.alert("I love YOU <3");
   }
 
   render() {
