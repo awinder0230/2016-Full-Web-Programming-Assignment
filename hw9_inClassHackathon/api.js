@@ -13,7 +13,6 @@ const animalNonExist = { avatar: '', name:'', age: 0, food:'', hobby:'' };
 
 router.get('/animals', (req, res) => {
   res.json(animals);
-  console.log(animals)
 });
 
 router.get('/animals/:id', (req, res) => {
