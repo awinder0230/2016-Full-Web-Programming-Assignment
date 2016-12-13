@@ -21,3 +21,10 @@
 
 ## Week 8: Test
 - Jest
+
+## Week 9: In-Class Hackathon
+- Express
+- React
+- Webpack
+- Bootstrap
+- Fetch
