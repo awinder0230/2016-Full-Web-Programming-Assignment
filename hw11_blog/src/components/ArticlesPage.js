@@ -9,25 +9,34 @@ class ArticlesPage extends Component {
     this.state = {
       articles: [],
     };
+
+    this.renderContent = this.renderContent.bind(this);
   }
 
   componentDidMount() {
     // fetch here
-    fetch(`/api/articles`)
+    fetch('/api/articles')
     .then(res => res.json())
     .then(json => { 
       this.setState({ articles: json });
     });
+    console.log(this.state.articles);
   }
+
+  renderContent = (content) => {
+    return <div dangerouslySetInnerHTML={{__html: content}}/>;
+  };
 
   render() {
     return (
       <div className="container">
         <div className="row">
-            {this.state.articles.map((article, index) => <ArticlesList key={index + 1}
+            {this.state.articles.map((article, index) => <ArticleList key={index + 1}
                 title={article.title}
-                href={"#/articles/"+(index+1).toString()}
-                tags={article.tags}/>)}
+                href={"#/articles/"+article._id}
+                tags={article.tags}
+                //content={article.content.substr(0,20)}
+                content={this.renderContent(article.content)}/>)}
         </div>
       </div>
     );
@@ -36,11 +45,21 @@ class ArticlesPage extends Component {
 
 export default ArticlesPage;
 
+const ArticleList = props => <div className="list-group">
+  <a href={props.href} className="list-group-item list-group-item-action">
+    <h5 className="list-group-item-heading">{props.title}</h5>
+    <p className="list-group-item-text">{props.content}</p>
+  </a>
+</div>
+
 const ArticlesList = props => <div className="col-md-12">
-  <div className="col-md-3">
-    <h1 href={props.href}>{props.title}</h1>
+  <div className="col-md-6">
+    <a href={props.href}>{props.title}</a>
   </div>
-  <div className="col-md-9">
-    <TagsInput value={props.tags}/>
+  <div className="col-md-3">
+    <h1>{props.tags}</h1>
+  </div>
+  <div>
+    <h1></h1>
   </div>
 </div>

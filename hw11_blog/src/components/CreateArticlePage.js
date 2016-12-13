@@ -16,25 +16,23 @@ class CreateArticlePage extends Component {
       tag: '',
     };
 
-    this.handleTagsChange = this.handleTagsChange.bind(this);
-    this.handleTagsChangeInput = this.handleTagsChangeInput.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleTagsChange = this.handleTagsChange.bind(this);
+    this.handleQuillChange = this.handleQuillChange.bind(this);
     this.handleSubmitClick = this.handleSubmitClick.bind(this);
     this.clearState = this.clearState.bind(this);
   }
 
   handleTitleChange = (t) => {
     this.setState({title: t.target.value, })
-    console.log(this.state.title);
   }
 
   handleTagsChange(tags) {
     this.setState({tags: tags,});
-    console.log(this.state.tags);
   }
 
-  handleTagsChangeInput(tag) {
-    this.setState({tag: tag,})
+  handleQuillChange = (q) => {
+    this.setState({content: q, })
   }
 
   handleSubmitClick = () => {
@@ -82,7 +80,7 @@ class CreateArticlePage extends Component {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <TagsInput value={this.state.tags} onChange={this.handleTagsChange} inputValue={this.state.tag} onChangeInput={this.handleTagsChangeInput}/>
+            <TagsInput value={this.state.tags} onChange={this.handleTagsChange}/>
           </div>
         </div>
         <div className="row">
