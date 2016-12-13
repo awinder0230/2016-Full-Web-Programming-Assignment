@@ -36,7 +36,7 @@ class CreateArticlePage extends Component {
   }
 
   handleSubmitClick = () => {
-    const confirm = window.confirm('確定要新增文章嗎？');
+    const confirm = window.confirm('Are you sure you want to add this new article?');
     if (confirm) {
       // send POST by fetch
       fetch('/api/articles/', {
@@ -75,7 +75,7 @@ class CreateArticlePage extends Component {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <input type="text" value={this.state.title} onChange={this.handleTitleChange} placeholder="New Title"></input>
+            <input type="text" className="form-control" value={this.state.title} onChange={this.handleTitleChange} placeholder="New Title"></input>
           </div>
         </div>
         <div className="row">

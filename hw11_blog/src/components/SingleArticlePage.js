@@ -51,18 +51,9 @@ class SingleArticlePage extends Component {
   handleQuillChange = (q) => {
     this.setState({content: q, })
   };
-/*
-  handleDelClick = () => {
-    fetch('/api/articles/'+this.props.id, {
-        method: 'DELETE',
-      })
-      .then( () => document.location.href= "#/articles")
-      .then( () => console.log("I am here!"));
-  };
 
-*/
   handleDelClick = () => {
-    const confirm = window.confirm('確定要刪除文章嗎？');
+    const confirm = window.confirm('Are you sure you want to delete this article?');
     if (confirm) {
       fetch('/api/articles/'+this.props.id, {
         method: 'DELETE'
@@ -104,12 +95,14 @@ class SingleArticlePage extends Component {
   renderTags = () => {
     if(this.state.isEditing){
       return <TagsInput value={this.state.tags} onChange={this.handleTagsChange}/>;
-      console.log("render tags");
-      console.log(this.state.tags);
     }
     else {
-      return <div>{this.state.tags}</div>;
-    }  
+      return <div>
+        {this.state.tags.map((tag,index) => <button key={index + 1}
+          type="button"
+          className="btn btn-secondary btn-sm">#{tag}</button>)}
+      </div>;
+    }
   };
 
   renderContent = () => {
@@ -117,7 +110,7 @@ class SingleArticlePage extends Component {
       return <ReactQuill theme="snow" value={this.state.content} onChange={this.handleQuillChange}/>;
     }
     else {
-      return <div dangerouslySetInnerHTML={{__html: this.state.content}}/>;
+      return <div className="jumbotron" dangerouslySetInnerHTML={{__html: this.state.content}}/>;
     }
   };
 
@@ -148,13 +141,13 @@ class SingleArticlePage extends Component {
               className="btn btn-info"
               role="button"
               onClick={this.handleEditClick}
-            >{isEditing ? '確認' : '編輯'}</button>
+            >{isEditing ? 'Submit' : 'Edit'}</button>
             {isEditing ? null :
             <button
-              className="btn btn-warning"
+              className="btn btn-danger"
               role="button"
               onClick={this.handleDelClick}
-            >刪除</button>
+            >Delete</button>
             }
           </div>
         </div>
