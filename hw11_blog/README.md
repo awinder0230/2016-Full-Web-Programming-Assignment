@@ -9,7 +9,7 @@ npm install
 
 ## start
 ```
-npm start
+NODE_ENV=development npm start
 ```
 
 ## lint
