@@ -36,7 +36,7 @@ articleRouter.put('/:id', (req, res) => {
 		const query = {
 			_id: req.params.id,
 		};
-		Article.findOneAndUndapte(query, {
+		Article.findOneAndUpdate(query, {
 			title, content, tags
 		}, {new: true}, (err, article) => res.json(article));
 });

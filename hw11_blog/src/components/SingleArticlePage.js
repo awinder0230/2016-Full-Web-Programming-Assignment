@@ -77,7 +77,7 @@ class SingleArticlePage extends Component {
     }
     else {
       this.setState({isEditing: false});
-      fetch('/api/articles/', {
+      fetch('/api/articles/'+this.props.id, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -88,7 +88,7 @@ class SingleArticlePage extends Component {
           content: this.state.content,
           tags: this.state.tags,
         }),
-      })
+      });
     }
   };
 
