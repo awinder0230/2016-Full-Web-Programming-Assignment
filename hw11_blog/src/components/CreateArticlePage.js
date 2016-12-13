@@ -70,7 +70,7 @@ class CreateArticlePage extends Component {
               className="btn btn-info pull-right"
               role="button"
               onClick={this.handleSubmitClick}
-            >送出</button>
+            >Submit</button>
           </div>
         </div>
         <div className="row">

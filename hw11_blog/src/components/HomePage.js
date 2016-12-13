@@ -9,6 +9,7 @@ class HomePage extends Component {
           <div className="col-md-12">
             <div className="jumbotron">
               <h1>My Hello Blog!</h1>
+              <h3>Welcome to my first blog ~</h3>
               <p><a className="btn btn btn-info btn-lg" href="#/articles" role="button">Article List</a></p>
               <p><a className="btn btn btn-info btn-lg" href="#/articles/new" role="button">New Article</a></p>
             </div>
